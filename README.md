@@ -7,12 +7,16 @@ Este proyecto simula un escenario de intercepción entre dos misiles en 2D, cons
 
 ## Estructura del proyecto
 
-- `misiles/` — Código fuente principal:
-  - `core/` — Física, trayectorias, solver de intercepción.
-  - `ui/` — Visualización (matplotlib, animación rica), interfaz interactiva.
-  - `scenarios/` — Ejemplo de parámetros (`baseline.json`).
-  - `main.py` — Script principal (ejecución headless o visual).
-- `assets/videos/` — Videos de ejemplo de la simulación.
+La estructura del proyecto está organizada de la siguiente manera:
+
+```
+misiles/                # Código fuente principal
+├── core/               # Física, trayectorias, solver de intercepción
+├── ui/                 # Visualización y UI interactiva
+├── scenarios/          # Escenarios de ejemplo (JSON)
+├── main.py             # Script principal para ejecutar la simulación
+assets/videos/          # Videos de ejemplo de la simulación
+```
 
 ## Requisitos
 
@@ -46,18 +50,12 @@ python -m misiles.ui.interactive
 
 ## Video de ejemplo
 
-Puedes ver una demostración en el siguiente archivo:
-- [`assets/videos/intercepcion_demo.mp4`](assets/videos/intercepcion_demo.mp4)
+Puedes ver una demostración directamente aquí:
 
-## Personalización
-
-- Modifica los parámetros en `misiles/scenarios/baseline.json` para probar diferentes casos.
-- El código está modularizado para facilitar la extensión y pruebas.
-
-## Contacto y soporte
-
-- Autor: Javier Arroyo
-- Para dudas o mejoras, abre un issue en el repositorio.
+<video controls width="600">
+  <source src="assets/videos/intercepcion_demo.mp4" type="video/mp4">
+  Tu navegador no soporta la reproducción de videos.
+</video>
 
 ---
 
