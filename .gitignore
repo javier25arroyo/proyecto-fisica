@@ -1,0 +1,9 @@
+
+
+# Python cache and artifacts
+__pycache__/
+*.py[cod]
+*.png
+*.mp4
+.DS_Store
+
