@@ -10,6 +10,8 @@ from .core.trajectories import generate_trajectory, Trajectory
 from .core.intercept import InterceptParams, solve_intercept_enumeration
 from .ui.params import load_scenario
 from .ui.viz_matplotlib import plot_and_animate, TrajData
+from .ui.viz_matplotlib import plot_and_animate as plot_basic, TrajData
+from .ui.viz_rich import animate_rich
 
 
 def load_json(path: str | Path):
@@ -63,7 +65,8 @@ def main():
         out_png = None
         if is_agg:
             out_png = str(Path(__file__).parent / 'sin_intercepcion.png')
-        plot_and_animate(
+        # Visualización rica también para el caso sin solución
+        animate_rich(
             TrajData(traj_a.t, traj_a.x, traj_a.y),
             None,
             None,
@@ -110,14 +113,14 @@ def main():
     if is_agg:
         out_png = str(Path(__file__).parent / 'intercepcion.png')
 
-    plot_and_animate(
+    animate_rich(
         attacker=TrajData(traj_a.t, traj_a.x, traj_a.y),
         defender=TrajData(t_d_aligned, x_d_aligned, y_d_aligned),
         impact=sol.impact_point,
         title=title,
-    show=not is_agg,
-    save_path=out_png,
-    animate=not is_agg,
+        show=not is_agg,
+        save_path=out_png,
+        animate=not is_agg,
     )
 
 
