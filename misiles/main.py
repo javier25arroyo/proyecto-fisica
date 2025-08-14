@@ -12,6 +12,7 @@ from .ui.params import load_scenario
 from .ui.viz_matplotlib import plot_and_animate, TrajData
 from .ui.viz_matplotlib import plot_and_animate as plot_basic, TrajData
 from .ui.viz_rich import animate_rich
+from .ui.interactive import interactive_attacker_setup, run_enhanced
 
 
 def load_json(path: str | Path):
@@ -19,10 +20,22 @@ def load_json(path: str | Path):
         return json.load(f)
 
 
-def main():
+def main_with_params(attacker_params=None):
     scen_path = Path(__file__).parent / 'scenarios' / 'baseline.json'
     data = load_json(scen_path)
     scen = load_scenario(data)
+    
+    # Aplicar parámetros personalizados del atacante si se proporcionan
+    if attacker_params:
+        scen.attacker.x0 = attacker_params.get('x0', scen.attacker.x0)
+        scen.attacker.y0 = attacker_params.get('y0', scen.attacker.y0)
+        scen.attacker.theta_deg = attacker_params.get('theta_deg', scen.attacker.theta_deg)
+        
+        # Actualizar parámetros del resorte
+        if 'spring_x' in attacker_params:
+            scen.attacker.spring.x = attacker_params['spring_x']
+        if 'mass' in attacker_params:
+            scen.attacker.spring.m = attacker_params['mass']
 
     # atacante
     sp_a = scen.attacker.spring
@@ -124,5 +137,49 @@ def main():
     )
 
 
+def main():
+    """Función principal por defecto (usa parámetros del baseline.json)"""
+    main_with_params()
+
+
+def main_interactive():
+    """Función principal con entrada interactiva de parámetros del atacante"""
+    print("¡Bienvenido al simulador de misiles!")
+    print("\nOpciones disponibles:")
+    print("1. Usar configuración por defecto")
+    print("2. Configurar parámetros del atacante por consola")
+    print("3. Interfaz gráfica completa (RECOMENDADO)")
+    
+    while True:
+        try:
+            choice = input("\nSeleccione una opción (1, 2 o 3): ").strip()
+            if choice == '1':
+                print("\nUsando configuración por defecto...")
+                main_with_params()
+                break
+            elif choice == '2':
+                print("\nConfiguración interactiva por consola...")
+                attacker_params = interactive_attacker_setup()
+                print("\n¡Iniciando simulación con parámetros personalizados!")
+                main_with_params(attacker_params)
+                break
+            elif choice == '3':
+                print("\n🚀 Iniciando interfaz gráfica mejorada...")
+                run_enhanced()
+                break
+            else:
+                print("Error: Seleccione 1, 2 o 3")
+        except KeyboardInterrupt:
+            print("\n\nSimulación cancelada por el usuario.")
+            break
+        except Exception as e:
+            print(f"\nError: {e}")
+            break
+
+
 if __name__ == '__main__':
-    main()
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == '--interactive':
+        main_interactive()
+    else:
+        main()
