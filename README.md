@@ -57,4 +57,5 @@ Edita `misiles/scenarios/baseline.json`. Campos principales:
 - El solver descarta ángulos con cos(theta)≈0.
 - Tolerancia espacial por defecto: 1 m.
 - Reporta si no hay solución (por límite de resorte, geometría o retardo).
-# prpyecto-fisica
+# Proyecto de física
+
