@@ -1,9 +1,15 @@
-# Simulación de Intercepción Balística 2D
+# 🚀 Simulación de Intercepción Balística 2D
 
-Este proyecto simula un escenario de intercepción entre dos misiles en 2D, considerando:
-- Lanzamiento por resorte (ley de Hooke + energía).
-- Trayectorias balísticas sin rozamiento.
-- Resolución visual animada.
+[![Python](https://img.shields.io/badge/Python-3.13%2B-blue)](https://www.python.org) [![Matplotlib](https://img.shields.io/badge/Matplotlib-3.5%2B-orange)](https://matplotlib.org)
+
+Bienvenido a la simulación definitiva de intercepción balística en 2D. Este proyecto combina principios avanzados de física y visualización para ofrecer una experiencia interactiva y rica en detalles.
+
+## Tabla de Contenidos
+- [Estructura del Proyecto](#estructura-del-proyecto)
+- [Requisitos](#requisitos)
+- [Instalación](#instalación)
+- [Ejecución](#ejecución)
+- [Video de Ejemplo](#video-de-ejemplo)
 
 ## Estructura del proyecto
 
@@ -26,7 +32,7 @@ assets/videos/          # Videos de ejemplo de la simulación
    pip install matplotlib
    ```
 
-## Ejecución rápida
+## Ejecución
 
 ### 1. Simulación básica (headless, guarda imagen)
 ```bash
@@ -50,7 +56,7 @@ python -m misiles.ui.interactive
 
 ## Video de ejemplo
 
-Puedes ver una demostración directamente aquí:
+Puedes ver una demostración directamente a continuación. Si el video no se carga correctamente, haz [clic aquí](assets/videos/intercepcion_demo.mp4) para descargarlo.
 
 <video controls width="600">
   <source src="assets/videos/intercepcion_demo.mp4" type="video/mp4">
