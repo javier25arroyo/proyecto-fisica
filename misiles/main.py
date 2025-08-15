@@ -12,7 +12,7 @@ from .ui.params import load_scenario
 from .ui.viz_matplotlib import plot_and_animate, TrajData
 from .ui.viz_matplotlib import plot_and_animate as plot_basic, TrajData
 from .ui.viz_rich import animate_rich
-from .ui.interactive import interactive_attacker_setup, run_enhanced
+from .ui.game_mode import run_game
 
 
 def load_json(path: str | Path):
@@ -143,32 +143,25 @@ def main():
 
 
 def main_interactive():
-    """Función principal con entrada interactiva de parámetros del atacante"""
+    """Función principal con opciones simplificadas"""
     print("¡Bienvenido al simulador de misiles!")
     print("\nOpciones disponibles:")
     print("1. Usar configuración por defecto")
-    print("2. Configurar parámetros del atacante por consola")
-    print("3. Interfaz gráfica completa (RECOMENDADO)")
+    print("2. Modo Juego (niños) 🎮")
     
     while True:
         try:
-            choice = input("\nSeleccione una opción (1, 2 o 3): ").strip()
+            choice = input("\nSeleccione una opción (1 o 2): ").strip()
             if choice == '1':
                 print("\nUsando configuración por defecto...")
                 main_with_params()
                 break
             elif choice == '2':
-                print("\nConfiguración interactiva por consola...")
-                attacker_params = interactive_attacker_setup()
-                print("\n¡Iniciando simulación con parámetros personalizados!")
-                main_with_params(attacker_params)
-                break
-            elif choice == '3':
-                print("\n🚀 Iniciando interfaz gráfica mejorada...")
-                run_enhanced()
+                print("\n🎮 Iniciando Modo Juego...")
+                run_game()
                 break
             else:
-                print("Error: Seleccione 1, 2 o 3")
+                print("Error: Seleccione 1 o 2")
         except KeyboardInterrupt:
             print("\n\nSimulación cancelada por el usuario.")
             break
