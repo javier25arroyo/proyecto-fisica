@@ -1,16 +1,14 @@
 from __future__ import annotations
 import json
-from dataclasses import asdict
 from pathlib import Path
 import math
 
 from .core.physics import deg2rad, rad2deg, GRAVITY_DEFAULT
 from .core.springs import Spring
-from .core.trajectories import generate_trajectory, Trajectory
+from .core.trajectories import generate_trajectory
 from .core.intercept import InterceptParams, solve_intercept_enumeration
 from .ui.params import load_scenario
-from .ui.viz_matplotlib import plot_and_animate, TrajData
-from .ui.viz_matplotlib import plot_and_animate as plot_basic, TrajData
+from .ui.viz_matplotlib import TrajData
 from .ui.viz_rich import animate_rich
 from .ui.game_mode import run_game
 
@@ -97,11 +95,11 @@ def main_with_params(attacker_params=None):
     v0_d = sol.v0_d
 
     # Construimos la trayectoria del defensor en su propio tiempo (0..tau)
+    from .core.physics import position_at
     tau = sol.impact_time - sol.delay
     dt = scen.globals.dt_sim
     n = max(1, int(math.ceil(tau/dt)))
     t_d = [i*dt for i in range(n+1)]
-    from .core.physics import position_at
     x_d = []
     y_d = []
     for t in t_d:
