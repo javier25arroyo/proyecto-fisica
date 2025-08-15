@@ -1,0 +1,7 @@
+# Dependencias principales para el proyecto de simulación de física de misiles
+matplotlib>=3.5.0
+numpy>=1.20.0
+rich>=10.0.0
+
+# Dependencias opcionales
+ffmpeg-python>=0.2.0  # Para exportar animaciones como videos

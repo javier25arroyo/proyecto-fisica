@@ -52,8 +52,8 @@ class GameApp:
         }
 
         # Figura grande estilo videojuego - tamaño mejorado
-        self.fig, self.ax = plt.subplots(figsize=(14, 9))
-        plt.subplots_adjust(left=0.08, right=0.92, top=0.88, bottom=0.20)
+        self.fig, self.ax = plt.subplots(figsize=(16, 10))
+        plt.subplots_adjust(left=0.08, right=0.92, top=0.82, bottom=0.22)
         self.ax.set_facecolor('#E6F4FF')  # cielo
         self.ax.grid(True, alpha=0.2)
         self.ax.set_aspect('equal', adjustable='box')
@@ -63,11 +63,11 @@ class GameApp:
         # "Suelo"
         self.ax.axhline(0, color='#66BB6A', linewidth=6, alpha=0.8)
 
-        # Curvas y marcadores
-        (self.att_line,) = self.ax.plot([], [], '-', color='#E53935', linewidth=3, label='🚀 Rojo')
-        (self.def_line,) = self.ax.plot([], [], '--', color='#1E88E5', linewidth=3, label='🛡️ Azul')
-        (self.att_pt,) = self.ax.plot([], [], 'o', color='#E53935', markersize=10)
-        (self.def_pt,) = self.ax.plot([], [], 'o', color='#1E88E5', markersize=10)
+        # Curvas y marcadores - más visibles
+        (self.att_line,) = self.ax.plot([], [], '-', color='#E53935', linewidth=4, label='🚀 Rojo', alpha=0.8)
+        (self.def_line,) = self.ax.plot([], [], '--', color='#1E88E5', linewidth=4, label='🛡️ Azul', alpha=0.8)
+        (self.att_pt,) = self.ax.plot([], [], 'o', color='#E53935', markersize=12, markeredgecolor='white', markeredgewidth=2)
+        (self.def_pt,) = self.ax.plot([], [], 'o', color='#1E88E5', markersize=12, markeredgecolor='white', markeredgewidth=2)
 
         # Lanzadores
         self.att_launch = self.ax.scatter([], [], marker='^', s=220, color='#B71C1C', zorder=10,
@@ -78,36 +78,41 @@ class GameApp:
         self.impact_star = self.ax.scatter([], [], marker='*', s=300, color='gold', zorder=12,
                                            edgecolors='#B71C1C', linewidth=2, label='⭐ Interceptación')
 
-        # HUD simple - mejor posicionado
-        self.hud_text = self.ax.text(0.5, 0.94, '', transform=self.fig.transFigure, ha='center', va='center',
-                                     fontsize=13, weight='bold', wrap=True)
+        # HUD simple - mejor posicionado sin superposición
+        self.hud_text = self.ax.text(0.5, 0.97, '', transform=self.fig.transFigure, ha='center', va='top',
+                                     fontsize=12, weight='bold', wrap=True, 
+                                     bbox=dict(boxstyle='round,pad=0.5', facecolor='lightblue', alpha=0.8))
 
         # Sliders GRANDES de "Fuerza" y "Ángulo" - mejor espaciados
-        ax_power = self.fig.add_axes([0.08, 0.08, 0.38, 0.04])
-        ax_angle = self.fig.add_axes([0.54, 0.08, 0.38, 0.04])
+        ax_power = self.fig.add_axes([0.08, 0.06, 0.38, 0.05])
+        ax_angle = self.fig.add_axes([0.54, 0.06, 0.38, 0.05])
         self.s_power = Slider(ax_power, '💪 Fuerza', 0.05, 1.0, valinit=self.attacker['spring_x'])
         self.s_angle = Slider(ax_angle, '📐 Ángulo', 5.0, 85.0, valinit=self.attacker['theta_deg'])
         for s in (self.s_power, self.s_angle):
-            s.label.set_fontsize(11)
-            s.valtext.set_fontsize(10)
+            s.label.set_fontsize(12)
+            s.label.set_weight('bold')
+            s.valtext.set_fontsize(11)
+            s.valtext.set_weight('bold')
 
-        # Botones grandes - mejor distribuidos y espaciados
-        button_y = 0.91
-        button_height = 0.05
-        ax_play = self.fig.add_axes([0.08, button_y, 0.14, button_height])
-        ax_reset = self.fig.add_axes([0.24, button_y, 0.14, button_height])
-        ax_next = self.fig.add_axes([0.40, button_y, 0.18, button_height])
-        ax_help = self.fig.add_axes([0.60, button_y, 0.12, button_height])
-        ax_auto = self.fig.add_axes([0.74, button_y, 0.12, button_height])
+        # Botones grandes - separados del HUD para evitar superposición
+        button_y = 0.87
+        button_height = 0.06
+        button_spacing = 0.02
+        ax_play = self.fig.add_axes([0.08, button_y, 0.15, button_height])
+        ax_reset = self.fig.add_axes([0.25, button_y, 0.15, button_height])
+        ax_next = self.fig.add_axes([0.42, button_y, 0.18, button_height])
+        ax_help = self.fig.add_axes([0.62, button_y, 0.13, button_height])
+        ax_auto = self.fig.add_axes([0.77, button_y, 0.13, button_height])
         self.btn_play = Button(ax_play, '🛡️ ¡Defender!', color='#43A047', hovercolor='#2E7D32')
         self.btn_reset = Button(ax_reset, '🔄 Reiniciar', color='#8D6E63', hovercolor='#6D4C41')
         self.btn_next = Button(ax_next, '🎮 Siguiente misión', color='#3949AB', hovercolor='#283593')
         self.btn_help = Button(ax_help, '❓ Ayuda', color='#00ACC1', hovercolor='#00838F')
         self.btn_auto = Button(ax_auto, '✨ Auto', color='#FBC02D', hovercolor='#F9A825')
         
-        # Ajustar tamaño de fuente de botones
+        # Ajustar tamaño de fuente de botones - más legibles
         for btn in [self.btn_play, self.btn_reset, self.btn_next, self.btn_help, self.btn_auto]:
-            btn.label.set_fontsize(9)
+            btn.label.set_fontsize(10)
+            btn.label.set_weight('bold')
 
         # Misiones sencillas (preajustes) - textos más cortos
         self.missions = [
@@ -136,7 +141,7 @@ class GameApp:
         self.anim: Optional[FuncAnimation] = None
 
         # Posición inicial del defensor (slider interno camuflado) - mejor posicionado
-        ax_hidden_defx0 = self.fig.add_axes([0.08, 0.01, 0.38, 0.02])
+        ax_hidden_defx0 = self.fig.add_axes([0.08, 0.005, 0.38, 0.015])
         ax_hidden_defx0.set_visible(False)
         self.s_defx0 = Slider(ax_hidden_defx0, '', -200.0, 200.0, valinit=self.scen.defender.x0)
 
@@ -301,8 +306,9 @@ class GameApp:
         self.att_launch.set_offsets([[att_x0, att_y0]])
         self.def_base.set_offsets([[def_x0, def_y0]])
 
-        # HUD texto - mejor ajustado
-        self.fig.suptitle(st.title, fontsize=12, y=0.96)
+        # Título separado del HUD para evitar superposición
+        self.fig.suptitle(st.title, fontsize=14, y=0.92, weight='bold',
+                         bbox=dict(boxstyle='round,pad=0.5', facecolor='lightgreen', alpha=0.8))
 
         # Animación de puntos sobre las curvas
         if self.anim is not None and self.anim.event_source is not None:

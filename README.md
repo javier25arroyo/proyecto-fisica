@@ -9,8 +9,20 @@ Simulador físico de interceptación de misiles con dos modos de uso:
 
 ## Instalación
 
+### Opción 1: Instalación automática con script de configuración
 ```bash
-pip install matplotlib numpy
+python setup.py
+```
+Este script instalará todas las dependencias necesarias y configurará el entorno automáticamente.
+
+### Opción 2: Instalación manual de dependencias
+```bash
+pip install -r requirements.txt
+```
+
+### Opción 3: Instalación básica
+```bash
+pip install matplotlib numpy rich
 ```
 
 ## Uso
@@ -198,7 +210,23 @@ misiles/
 
 - **matplotlib**: Interfaz gráfica
 - **numpy**: Cálculos numéricos
-- **rich**: Animación en terminal (incluida en Python 3.9+)
+- **rich**: Animación en terminal
+
+Todas las dependencias están especificadas en el archivo `requirements.txt` y pueden ser instaladas automáticamente usando el script `setup.py`.
+
+## Configuración del entorno
+
+El proyecto incluye un archivo `.env` que permite personalizar diferentes aspectos del simulador:
+
+```
+# Ejemplo de configuración en .env
+GRAVITY=9.81            # Aceleración gravitacional
+DEFAULT_DT=0.02         # Intervalo de tiempo para simulación
+SHOW_ANIMATIONS=1       # Activar/desactivar animaciones
+DEBUG=0                 # Modo debug
+```
+
+Puedes modificar estos valores según tus necesidades.
 
 ## 💡 Notas Importantes
 
